@@ -50,17 +50,46 @@ public class PrimarySort {
      * */
     public static void shellSort(Comparable[] a){
         int len = a.length;
-        int h = 1;
-        while(h < len/3){
-            h = 3*h +1;
-        }
-        while(h >= 1){
+        int h = 1;//h为该次插入排序的元素间隔
+        while(h<len/3) h=h*3+1;
+        while (h>=1) {
             for(int i = h; i < len; i++){
-
+                int j = i;
+                while(j>=h && less(a[j],a[j-h])){
+                    exch(a,j,j-h);
+                    j = j-h;
+                }
             }
+            h = h/3;
         }
     }
 
+    /**
+     * 归并排序
+     * 将数组（递归）分成两半分别排序再归并
+    * */
+    private static Comparable[] aux;
+    public static void mergeSort(Comparable[] a){
+        int len = a.length;
+
+    }
+
+    /* 归并排序中用于归并的方法 先复制到辅助数组再归并 */
+    private static void merge(Comparable[] a, int lo, int mid, int hi){
+        for(int k = lo; k <= hi; k++){
+            aux[k] = a[k];
+        }
+        int i = lo;//a[lo .. mid]
+        int j = mid+1;//a[mid+1 .. hi]
+        for(int k = lo; k <= hi;k++){
+
+        }
+    }
+
+
+    /**
+     * 排序的基础方法
+     * */
     private static boolean less(Comparable v,Comparable w){
         return v.compareTo(w) < 0;
     }
@@ -97,7 +126,7 @@ public class PrimarySort {
         long a1 = System.currentTimeMillis();
         System.out.println(a1-start);
         String[] c = a.clone();
-        insertionSort(c);
+        shellSort(c);
         show(c);
         long a2 = System.currentTimeMillis();
         System.out.println(a2-a1);
