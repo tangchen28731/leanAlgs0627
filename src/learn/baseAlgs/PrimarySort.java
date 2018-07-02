@@ -65,26 +65,54 @@ public class PrimarySort {
     }
 
     /**
-     * 归并排序
+     * 归并排序 - 自顶向下
      * 将数组（递归）分成两半分别排序再归并
     * */
     private static Comparable[] aux;
-    public static void mergeSort(Comparable[] a){
+    public static void mergeUpDownSort(Comparable[] a){
         int len = a.length;
-
+        aux = new Comparable[len];
+        mergeUpDownSort( a, 0, len-1);
     }
-
+    private static void mergeUpDownSort(Comparable[] a, int lo, int hi){
+        if(hi<=lo) return;
+        int mid = lo + (hi-lo)/2;
+        mergeUpDownSort(a, lo, mid);
+        mergeUpDownSort(a, mid+1, hi);
+        merge(a, lo, mid, hi);
+    }
     /* 归并排序中用于归并的方法 先复制到辅助数组再归并 */
     private static void merge(Comparable[] a, int lo, int mid, int hi){
         for(int k = lo; k <= hi; k++){
             aux[k] = a[k];
         }
-        int i = lo;//a[lo .. mid]
-        int j = mid+1;//a[mid+1 .. hi]
+        int i = lo;
+        int j = mid+1;
         for(int k = lo; k <= hi;k++){
-
+            if(i>mid) a[k] = aux[j++];
+            else if(j>hi) a[k] = aux[i++];
+            else if(less(aux[j],aux[i])) a[k] = aux[j++];
+            else a[k] = aux[i++];
         }
     }
+    /**
+     * 归并排序 - 自底向上
+     * 先归并微型数组再成对归并
+     * */
+    public static void mergeDownUpSort(Comparable[] a){
+        int len = a.length;
+        aux = new Comparable[len];
+        for(int sz = 1; sz < len; sz= sz+sz){
+            for(int lo = 0; lo < len-sz; lo +=sz+sz){
+                merge(a, lo, lo+sz-1, Math.min(lo+sz+sz-1, len-1));
+            }
+        }
+    }
+
+    /**
+     * 改进的归并排序
+     * 1.长度短的数组直接使用插入排序
+     * */
 
 
     /**
@@ -126,7 +154,7 @@ public class PrimarySort {
         long a1 = System.currentTimeMillis();
         System.out.println(a1-start);
         String[] c = a.clone();
-        shellSort(c);
+        mergeDownUpSort(c);
         show(c);
         long a2 = System.currentTimeMillis();
         System.out.println(a2-a1);
