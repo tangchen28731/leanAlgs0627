@@ -1,4 +1,4 @@
-package learn.testAlgs;
+package learn.baseAlgs;
 /**
  * 二分查找
  * */
