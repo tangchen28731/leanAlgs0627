@@ -1,5 +1,6 @@
 package learn.bytedance;
 
+import java.util.HashMap;
 import java.util.Scanner;
 
 public class Question2 {
@@ -28,4 +29,28 @@ public class Question2 {
         if(c!=0) count(a,b,c-1);
 
     }
+
+    /*设想的做法 */
+    public static void Permutation(String str) {
+        char[] arr = str.toCharArray();
+        HashMap<Character,Integer> map = new HashMap<>();
+        for(int i = 0;i<arr.length;i++){
+            map.put(arr[i],map.getOrDefault(arr[i],0)+1);
+        }
+        int sum = 0;
+        for(Integer i:map.values()){
+            sum += i;
+        }
+        long res = 1;
+        while(sum>0){
+            res *= (double)sum;
+            sum--;
+        }
+        for(Integer i:map.values()){
+            res = res/i;
+        }
+        System.out.println(res);
+    }
+
+
 }
