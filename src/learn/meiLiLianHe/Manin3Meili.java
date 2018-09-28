@@ -1,3 +1,5 @@
+package learn.meiLiLianHe;
+
 import java.util.Scanner;
 
 public class Manin3Meili {
@@ -7,7 +9,7 @@ public class Manin3Meili {
      * 计算小团有多少种走法。给定两个正整数int x,int y，请返回小团的走法数目。*/
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
-        while (in.hasNextInt()) {//注意while处理多个case
+        while (in.hasNextInt()) {//注意while处多个case
             int a = in.nextInt();
             int b = in.nextInt();
             count(0,0,a+1,b+1);
